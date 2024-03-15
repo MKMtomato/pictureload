@@ -2,8 +2,11 @@
   <div>
     <q-btn label="名前のみ" @click="toggleData(false)"></q-btn>
     <q-btn label="詳細" @click="toggleData(true)"></q-btn>
+    <q-btn label="表の表示" @click="button"></q-btn>
+
     <q-input v-model="name" label="氏名" />
     <q-input v-model="field_number" label="畑番号" />
+
     <div v-for="p in pesticides" :key="p.name" class="pesticide">
       <q-btn
         @click="clickPesticide(p)"
@@ -18,7 +21,7 @@
         {{ p.target }}
       </div>
     </div>
-    <q-btn label="送信" color="primary" @click="submit()" />
+    <q-btn label="送信" color="primary" @click="submit()"></q-btn>
   </div>
 </template>
 
@@ -73,6 +76,8 @@ function makePostData() {
   };
   return post;
 }
+
+//function button{}  ShowPage.vueを表示させたい
 </script>
 
 <style scoped>
