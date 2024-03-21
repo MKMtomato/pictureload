@@ -4,19 +4,40 @@
     <q-btn label="詳細" @click="toggleData(true)"></q-btn>
     <q-btn label="表の表示" @click="button(true)"> </q-btn>
     <q-btn label="表の非表示" @click="button(false)"> </q-btn>
+    <q-btn label="画像の保存" @click="gazou()"> </q-btn>
+    <div>
+      <input type="file" @change="uploadFile" />
+    </div>
+    <!-- 画像を表示する -->
+    <div>
+      <img :src="image" />
+    </div>
+
     <div v-if="tableshow" class="detail">
       <table border="1">
         <tr>
           <th>氏名</th>
-          <th>畑番号</th>
-          <th>薬剤名</th>
-          <th>登録日</th>
+          <th>シメイ</th>
+          <th>電話番号</th>
+          <th>郵便番号</th>
+          <th>住所</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>生年月日</th>
         </tr>
-        <tr v-for="p in posts" :key="p.timestamp">
-          <td>{{ p.name }}</td>
-          <td>{{ p.field_number }}</td>
-          <td>{{ p.pesticide }}</td>
-          <td>{{ strDate(p.timestamp) }}</td>
+        <tr v-for="p in hairetu" :key="p[0]">
+          <td>{{ p[1] }}</td>
+          <td>{{ p[2] }}</td>
+          <td>{{ p[3] }}</td>
+          <td>{{ p[4] }}</td>
+          <td>{{ p[5] }}</td>
+          <td>{{ p[6] }}</td>
+          <td>{{ p[7] }}</td>
+          <td>{{ p[8] }}</td>
+          <td>{{ p[9] }}</td>
+          <td>{{ p[10] }}</td>
         </tr>
       </table>
     </div>
@@ -49,6 +70,9 @@ import { addPost } from '../utils/firebase/write';
 import { Notify } from 'quasar';
 import { getPosts } from '../utils/firebase/read';
 import { useRoute } from 'vue-router';
+import { jsdata, convertCSVtoArray } from './personal_infomation';
+import { upload } from '../utils/firebase/fileupload';
+import { Console } from 'console';
 
 let name = ref();
 let field_number = ref();
@@ -56,7 +80,9 @@ let btnmode = ref(false);
 let selecting = ref({} as Pesticide);
 let tableshow = ref();
 let posts = ref([] as Post[]);
+let hairetu = ref();
 const route = useRoute();
+let image;
 
 onMounted(() => {
   getPosts((data: any) => {
@@ -65,6 +91,9 @@ onMounted(() => {
     });
     posts.value.sort((a, b) => b.timestamp - a.timestamp);
   });
+
+  hairetu.value = convertCSVtoArray(jsdata);
+  console.log(convertCSVtoArray(jsdata));
 });
 
 watch(route, (n, p) => {
@@ -123,6 +152,26 @@ function strDate(ts: number) {
     date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
   );
 }
+
+function gazou() {
+  upload(image);
+  console.log(image);
+}
+// v-onで使う関数
+const uploadFile = (e: any) => {
+  // file情報取得
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  // 取得したファイル情報を
+  // (createObjectURL)の引数に入れることでファイルにアクセス可能な
+  // (URL)を作成することができます
+  // (url)をimageに代入する
+  reader.readAsArrayBuffer(file);
+  reader.onload = function () {
+    console.log(reader.result);
+    image = reader.result;
+  };
+};
 </script>
 
 <style scoped>
