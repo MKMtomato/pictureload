@@ -3,21 +3,15 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage';
 // Create a root reference
 function strDate() {
   const date = new Date();
-  return (
-    date.getFullYear() +
-    '.' +
-    (date.getMonth() + 1) +
-    '.' +
-    date.getDate() +
-    '.' +
-    date.getHours() +
-    '.' +
-    date.getMinutes() +
-    '.' +
-    date.getSeconds() +
-    '.' +
-    date.getMilliseconds()
-  );
+  var y = ('0000' + date.getFullYear()).slice(-4);
+  var mo = ('00' + (date.getMonth() + 1)).slice(-2);
+  var d = ('00' + date.getDate()).slice(-2);
+  var h = ('00' + date.getHours()).slice(-2);
+  var mi = ('00' + date.getMinutes()).slice(-2);
+  var s = ('00' + date.getSeconds()).slice(-2);
+  var milli = ('000' + date.getMilliseconds()).slice(-3);
+
+  return y + '.' + mo + '.' + d + '.' + h + '.' + mi + '.' + s + '.' + milli;
 }
 
 export function upload(file) {
