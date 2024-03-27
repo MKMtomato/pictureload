@@ -11,9 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
-import { Post } from './models';
-import { getPosts } from '../utils/firebase/read';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { upload } from '../utils/firebase/fileupload';
 import { getimage } from '../utils/firebase/filedownload';
