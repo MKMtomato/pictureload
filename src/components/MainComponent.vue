@@ -7,7 +7,6 @@
     <!-- 画像を表示する -->
     <img id="upload" :src="previewimg" />
     <img id="download" :src="getimage()" alt="" />
-    
   </div>
 </template>
 
@@ -18,12 +17,12 @@ import { getPosts } from '../utils/firebase/read';
 import { useRoute } from 'vue-router';
 import { jsdata, convertCSVtoArray } from './personal_infomation';
 import { upload } from '../utils/firebase/fileupload';
-//import { getimage } from '../utils/firebase/filedownload';
+import { getimage } from '../utils/firebase/filedownload';
 
 let posts = ref([] as Post[]);
 let hairetu = ref();
 const route = useRoute();
-const uploadimg = ref();
+let uploadimg;
 const previewimg = ref();
 
 onMounted(() => {
@@ -57,14 +56,12 @@ const uploadFile = (e: any) => {
   // (url)をimageに代入する
   preader.readAsDataURL(file);
   preader.onload = function () {
-    console.log(preader.result);
     previewimg.value = preader.result;
   };
   ureader.readAsArrayBuffer(file);
   ureader.onload = function () {
     console.log(ureader.result);
-    uploadimg.value = ureader.result;
-
+    uploadimg = ureader.result;
   };
 };
 </script>
