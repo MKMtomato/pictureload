@@ -15,26 +15,12 @@ import { ref, onMounted, watch } from 'vue';
 import { Post } from './models';
 import { getPosts } from '../utils/firebase/read';
 import { useRoute } from 'vue-router';
-import { jsdata, convertCSVtoArray } from './personal_infomation';
 import { upload } from '../utils/firebase/fileupload';
 import { getimage } from '../utils/firebase/filedownload';
 
-let posts = ref([] as Post[]);
-let hairetu = ref();
 const route = useRoute();
 let uploadimg;
 const previewimg = ref();
-
-onMounted(() => {
-  getPosts((data: any) => {
-    Object.keys(data).forEach((e) => {
-      posts.value.push(data[e]);
-    });
-    posts.value.sort((a, b) => b.timestamp - a.timestamp);
-  });
-
-  hairetu.value = convertCSVtoArray(jsdata);
-});
 
 watch(route, (n, p) => {
   location.reload();
