@@ -8,7 +8,7 @@
     <div>
       <img id="upload" :src="image" />
     </div>
-    <img id="download" :src="getimage()" alt="" />
+    <!-- <img id="download" :src="getimage()" alt="" /> -->
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import { getPosts } from '../utils/firebase/read';
 import { useRoute } from 'vue-router';
 import { jsdata, convertCSVtoArray } from './personal_infomation';
 import { upload } from '../utils/firebase/fileupload';
-import { getimage } from '../utils/firebase/filedownload';
+//import { getimage } from '../utils/firebase/filedownload';
 
 let posts = ref([] as Post[]);
 let hairetu = ref();
@@ -35,7 +35,6 @@ onMounted(() => {
   });
 
   hairetu.value = convertCSVtoArray(jsdata);
-  console.log(convertCSVtoArray(jsdata));
 });
 
 watch(route, (n, p) => {
@@ -44,7 +43,6 @@ watch(route, (n, p) => {
 
 function gazou() {
   upload(image);
-  console.log(image);
 }
 // v-onで使う関数
 const uploadFile = (e: any) => {
@@ -57,7 +55,6 @@ const uploadFile = (e: any) => {
   // (url)をimageに代入する
   reader.readAsArrayBuffer(file);
   reader.onload = function () {
-    console.log(reader.result);
     image = reader.result;
   };
 };
