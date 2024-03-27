@@ -7,11 +7,7 @@
     <!-- 画像を表示する -->
     <img id="upload" :src="previewimg" />
     <img id="download" :src="getimage()" alt="" />
-    <img
-      id="downloadtest"
-      src="https://firebasestorage.googleapis.com/v0/b/seisanrireki.appspot.com/o/image.png?alt=media&token=f519d267-bd1b-4796-af27-6da006d3427ed"
-      alt=""
-    />
+    
   </div>
 </template>
 
@@ -22,7 +18,7 @@ import { getPosts } from '../utils/firebase/read';
 import { useRoute } from 'vue-router';
 import { jsdata, convertCSVtoArray } from './personal_infomation';
 import { upload } from '../utils/firebase/fileupload';
-import { getimage } from '../utils/firebase/filedownload';
+//import { getimage } from '../utils/firebase/filedownload';
 
 let posts = ref([] as Post[]);
 let hairetu = ref();
@@ -39,7 +35,6 @@ onMounted(() => {
   });
 
   hairetu.value = convertCSVtoArray(jsdata);
-  console.log(convertCSVtoArray(jsdata));
 });
 
 watch(route, (n, p) => {
@@ -69,6 +64,7 @@ const uploadFile = (e: any) => {
   ureader.onload = function () {
     console.log(ureader.result);
     uploadimg.value = ureader.result;
+
   };
 };
 </script>
