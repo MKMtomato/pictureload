@@ -6,8 +6,9 @@
     </div>
     <!-- 画像を表示する -->
     <div>
-      <img :src="image" />
+      <img id="upload" :src="image" />
     </div>
+    <img id="download" :src="getimage()" alt="" />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import { getPosts } from '../utils/firebase/read';
 import { useRoute } from 'vue-router';
 import { jsdata, convertCSVtoArray } from './personal_infomation';
 import { upload } from '../utils/firebase/fileupload';
+import { getimage } from '../utils/firebase/filedownload';
 
 let posts = ref([] as Post[]);
 let hairetu = ref();
